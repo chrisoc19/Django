@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY','f81!luxs+_qb8^xq((@*cf5#nnouoct@2+jorh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [os.environ.get('GITPOD_HOSTNAME'),
+ALLOWED_HOSTS = [os.environ.get('HOSTNAME'),
                  os.environ.get('HOSTNAME')]
 
 
@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
    # }
 #}
 
-DATABASES = {'default': dj_database_url.parse("postgres://zommebzdvgihxr:896001c1a3732b2ce76e7d520e010d1a0bfac8cbba47a0bbf343b491e1d3ad17@ec2-46-51-190-87.eu-west-1.compute.amazonaws.com:5432/dblubugpga6fqj")}
+DATABASES = {'default': dj_database_url.parse(os.environ.get(DATABASE_URL))}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
