@@ -12,6 +12,14 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import dj_database_url
+import env
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', "Env value not loaded")
+
+if os.environ.get('DEVELOPMENT'):
+    development = True
+else:
+    development = False
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,12 +29,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'f81!luxs+_qb8^xq((@*cf5#nnouoct@2+jorhjek@*&53r!9r'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = development
 
-ALLOWED_HOSTS = ['plain-django-todo.herokuapp.com']
+ALLOWED_HOSTS = ['plain-django-todo.herokuapp.com', 'localhost']
 
 
 # Application definition
@@ -75,14 +83,15 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-#DATABASES = {
-    #'default': {
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-   # }
-#}
-
-DATABASES = {'default': dj_database_url.parse("postgres://zommebzdvgihxr:896001c1a3732b2ce76e7d520e010d1a0bfac8cbba47a0bbf343b491e1d3ad17@ec2-46-51-190-87.eu-west-1.compute.amazonaws.com:5432/dblubugpga6fqj")}
+if development:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+else:
+    DATABASES = {'default': dj_database_url.parse("postgres://zommebzdvgihxr:896001c1a3732b2ce76e7d520e010d1a0bfac8cbba47a0bbf343b491e1d3ad17@ec2-46-51-190-87.eu-west-1.compute.amazonaws.com:5432/dblubugpga6fqj")}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
